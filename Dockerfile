@@ -64,6 +64,16 @@ RUN apt-get install -y --no-install-recommends \
 RUN apt-get clean 
 RUN rm -rf /var/lib/apt/lists/*
 
+# Update node package manager and typescript package
+# Update packages
+RUN npm install --location=global \
+    npm@latest \
+    typescript@latest \
+    @cyclonedx/bom@latest \
+    && npm update --global \
+    && npm cache clean --force \
+    && rm -rf /root/.npm/*
+    
 # Download and Install Trivy
 RUN wget https://github.com/aquasecurity/trivy/releases/download/v0.41.0/trivy_0.41.0_Linux-64bit.deb
 RUN dpkg -i trivy_0.41.0_Linux-64bit.deb
